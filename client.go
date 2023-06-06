@@ -1,7 +1,10 @@
 package kagi
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/httpjamesm/kagi-ai-go/constants"
@@ -40,7 +43,7 @@ func (c *Client) getBaseURL() string {
 	return constants.BASE_URL + "/" + string(c.Config.APIVersion)
 }
 
-func (c *Client) SendRequest(method, path string, data map[string]interface{}) (res []byte, err error) {
+func (c *Client) SendRequest(method, path string, data map[string]interface{}, v any) (err error) {
 
 	baseURL := c.getBaseURL()
 
@@ -76,6 +79,30 @@ func (c *Client) SendRequest(method, path string, data map[string]interface{}) (
 		return
 	}
 
-	res = resp.Body()
-	return
+	// get reader from body
+	body := resp.Body()
+	reader := bytes.NewReader(body)
+	ioReader := io.Reader(reader)
+
+	return decodeResponse(ioReader, v)
+}
+
+func decodeResponse(body io.Reader, v any) error {
+	if v == nil {
+		return nil
+	}
+
+	if result, ok := v.(*string); ok {
+		return decodeString(body, result)
+	}
+	return json.NewDecoder(body).Decode(v)
+}
+
+func decodeString(body io.Reader, output *string) error {
+	b, err := io.ReadAll(body)
+	if err != nil {
+		return err
+	}
+	*output = string(b)
+	return nil
 }

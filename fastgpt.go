@@ -1,7 +1,6 @@
 package kagi
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
@@ -29,21 +28,14 @@ func (c *Client) FastGPTCompletion(params FastGPTCompletionParams) (res FastGPTC
 		return
 	}
 
-	resp, err := c.SendRequest("POST", "/fastgpt", map[string]interface{}{
+	err = c.SendRequest("POST", "/fastgpt", map[string]interface{}{
 		"query":      params.Query,
 		"web_search": params.WebSearch,
 		"cache":      params.Cache,
-	})
+	}, &res)
 	if err != nil {
 		return
 	}
-
-	jsonBytes, err := json.Marshal(resp)
-	if err != nil {
-		return
-	}
-
-	err = json.Unmarshal(jsonBytes, &res)
 
 	return
 }
