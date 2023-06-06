@@ -8,3 +8,27 @@ An unofficial [Kagi API](https://help.kagi.com/kagi/api/overview.html) client fo
 go get -u github.com/httpjamesm/kagigo
 ```
 
+## Quick Start
+
+### Client
+
+```go
+client := kagi.NewClient(&kagi.ClientConfig{
+    APIKey:     os.Getenv("KAGI_API_KEY"),
+    APIVersion: "v0",
+})
+```
+### FastGPT
+
+```go
+response, err := client.FastGPTCompletion(kagi.FastGPTCompletionParams{
+    Query:     "query",
+    WebSearch: false,
+    Cache:     true,
+})
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(response.Data.Output)
+```
