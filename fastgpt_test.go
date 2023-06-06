@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/httpjamesm/kagi-ai-go/constants"
+	"github.com/httpjamesm/kagigo/constants"
 )
 
 func TestFastGPTCompletion(t *testing.T) {

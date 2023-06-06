@@ -7,7 +7,7 @@ import (
 	"io"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/httpjamesm/kagi-ai-go/constants"
+	"github.com/httpjamesm/kagigo/constants"
 )
 
 type ClientConfig struct {
