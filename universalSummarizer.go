@@ -12,10 +12,10 @@ const (
 type SummaryEngine string
 
 const (
-	SummaryEngineT5   SummaryEngine = "cecil"
-	SummaryEngineGPT3 SummaryEngine = "agnes"
-	SummaryEngineGPT2 SummaryEngine = "daphne"
-	SummaryEngineGPT1 SummaryEngine = "muriel"
+	SummaryEngineCecil  SummaryEngine = "cecil"
+	SummaryEngineAgnes  SummaryEngine = "agnes"
+	SummaryEngineDaphne SummaryEngine = "daphne"
+	SummaryEngineMuriel SummaryEngine = "muriel"
 )
 
 type UniversalSummarizerParams struct {
