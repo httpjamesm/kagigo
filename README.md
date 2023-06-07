@@ -32,3 +32,18 @@ if err != nil {
 }
 fmt.Println(response.Data.Output)
 ```
+
+### Universal Summarizer
+
+```go
+response, err := client.UniversalSummarizerCompletion(kagi.UniversalSummarizerCompletionParams{
+    URL:         "https://blog.kagi.com/security-audit",
+    SummaryType: kagi.SummaryTypeSummary,
+    Engine:      kagi.SummaryEngineCecil,
+})
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(response.Data.Output)
+```
