@@ -43,7 +43,7 @@ func (c *Client) getBaseURL() string {
 	return constants.BASE_URL + "/" + string(c.Config.APIVersion)
 }
 
-func (c *Client) SendRequest(method, path string, data map[string]interface{}, v any) (err error) {
+func (c *Client) SendRequest(method, path string, data interface{}, v any) (err error) {
 
 	baseURL := c.getBaseURL()
 

@@ -28,11 +28,7 @@ func (c *Client) FastGPTCompletion(params FastGPTCompletionParams) (res FastGPTC
 		return
 	}
 
-	err = c.SendRequest("POST", "/fastgpt", map[string]interface{}{
-		"query":      params.Query,
-		"web_search": params.WebSearch,
-		"cache":      params.Cache,
-	}, &res)
+	err = c.SendRequest("POST", "/fastgpt", params, &res)
 	if err != nil {
 		return
 	}
