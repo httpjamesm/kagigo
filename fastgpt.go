@@ -2,6 +2,7 @@ package kagi
 
 import (
 	"fmt"
+	"go/types"
 )
 
 type FastGPTCompletionParams struct {
@@ -20,6 +21,7 @@ type FastGPTCompletionResponse struct {
 		Output string `json:"output"`
 		Tokens int    `json:"tokens"`
 	} `json:"data"`
+	Errors []types.Error `json:"error"`
 }
 
 func (c *Client) FastGPTCompletion(params FastGPTCompletionParams) (res FastGPTCompletionResponse, err error) {
@@ -30,6 +32,11 @@ func (c *Client) FastGPTCompletion(params FastGPTCompletionParams) (res FastGPTC
 
 	err = c.SendRequest("POST", "/fastgpt", params, &res)
 	if err != nil {
+		return
+	}
+
+	if len(res.Errors) != 0 {
+		err = fmt.Errorf("api returned error: %v", res.Errors)
 		return
 	}
 

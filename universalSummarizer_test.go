@@ -51,4 +51,14 @@ func TestUniversalSummarizerCompletion(t *testing.T) {
 	if res.Data.Tokens < 0 {
 		t.Errorf("Expected positive Tokens, got '%d'", res.Data.Tokens)
 	}
+
+	params.URL = "very-invalid-url"
+
+	// Call the function being tested
+	res, err = client.UniversalSummarizerCompletion(params)
+
+	// Check for errors
+	if err == nil {
+		t.Errorf("Expected error, got nil")
+	}
 }

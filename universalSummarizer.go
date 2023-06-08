@@ -1,6 +1,9 @@
 package kagi
 
-import "fmt"
+import (
+	"fmt"
+	"go/types"
+)
 
 type SummaryType string
 
@@ -34,6 +37,7 @@ type UniversalSummarizerResponse struct {
 		Output string `json:"output"`
 		Tokens int    `json:"tokens"`
 	} `json:"data"`
+	Errors []types.Error `json:"error"`
 }
 
 func (c *Client) UniversalSummarizerCompletion(params UniversalSummarizerParams) (res UniversalSummarizerResponse, err error) {
@@ -44,6 +48,11 @@ func (c *Client) UniversalSummarizerCompletion(params UniversalSummarizerParams)
 
 	err = c.SendRequest("POST", "/summarize", params, &res)
 	if err != nil {
+		return
+	}
+
+	if len(res.Errors) != 0 {
+		err = fmt.Errorf("api returned error: %v", res.Errors)
 		return
 	}
 
