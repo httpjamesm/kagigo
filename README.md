@@ -36,7 +36,7 @@ fmt.Println(response.Data.Output)
 ### Universal Summarizer
 
 ```go
-response, err := client.UniversalSummarizerCompletion(kagi.UniversalSummarizerCompletionParams{
+response, err := client.UniversalSummarizerCompletion(kagi.UniversalSummarizerParams{
     URL:         "https://blog.kagi.com/security-audit",
     SummaryType: kagi.SummaryTypeSummary,
     Engine:      kagi.SummaryEngineCecil,
