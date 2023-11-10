@@ -13,9 +13,10 @@ type FastGPTCompletionParams struct {
 
 type FastGPTCompletionResponse struct {
 	Meta struct {
-		ID   string `json:"id"`
-		Node string `json:"node"`
-		Ms   int    `json:"ms"`
+		ID         string  `json:"id"`
+		Node       string  `json:"node"`
+		Ms         int     `json:"ms"`
+		APIBalance float64 `json:"api_balance"`
 	} `json:"meta"`
 	Data struct {
 		Output     string `json:"output"`
