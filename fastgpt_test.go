@@ -19,7 +19,7 @@ func TestFastGPTCompletion(t *testing.T) {
 	// Define test input parameters
 	params := FastGPTCompletionParams{
 		Query:     "test query",
-		WebSearch: false,
+		WebSearch: true,
 		Cache:     true,
 	}
 
