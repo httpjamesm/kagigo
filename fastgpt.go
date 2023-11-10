@@ -18,8 +18,13 @@ type FastGPTCompletionResponse struct {
 		Ms   int    `json:"ms"`
 	} `json:"meta"`
 	Data struct {
-		Output string `json:"output"`
-		Tokens int    `json:"tokens"`
+		Output     string `json:"output"`
+		Tokens     int    `json:"tokens"`
+		References []struct {
+			Title   string `json:"title"`
+			Snippet string `json:"snippet"`
+			URL     string `json:"url"`
+		} `json:"references"`
 	} `json:"data"`
 	Errors []types.Error `json:"error"`
 }
