@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/httpjamesm/kagigo/constants"
+	"github.com/httpjamesm/kagigo/types"
 )
 
 type ClientConfig struct {
@@ -71,14 +72,13 @@ func (c *Client) SendRequest(method, path string, data interface{}, v any) (err 
 	}
 
 	if resp.StatusCode() != 200 {
-		var res UniversalSummarizerResponse
-		err := json.Unmarshal(resp.Body(), &res)
-		if err != nil || len(res.Errors) == 0 {
+		var apiError types.ErrorResponse
+		err := json.Unmarshal(resp.Body(), &apiError)
+		if err != nil || len(apiError.Error) == 0 {
 			return fmt.Errorf("received status code %d with unparseable error response", resp.StatusCode())
 		}
-		errObj := res.Errors[0]
 		return fmt.Errorf("received status code %d. error object: %v", resp.StatusCode(),
-			fmt.Sprintf("[code: %d, msg: %s, ref: %v]", errObj.Code, errObj.Msg, errObj.Ref))
+			fmt.Sprintf("[code: %d, msg: %s, ref: %v]", apiError.Error[0].Code, apiError.Error[0].Msg, apiError.Error[0].Ref))
 	}
 
 	if err != nil {
