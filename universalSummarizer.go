@@ -2,7 +2,7 @@ package kagi
 
 import (
 	"fmt"
-	"go/types"
+	"github.com/httpjamesm/kagigo/types"
 )
 
 type SummaryType string
@@ -52,7 +52,7 @@ func (c *Client) UniversalSummarizerCompletion(params UniversalSummarizerParams)
 	}
 
 	if len(res.Errors) != 0 {
-		err = fmt.Errorf("api returned error: %v", res.Errors)
+		err = fmt.Errorf("api returned error: %v", res.Errors[0])
 		return
 	}
 

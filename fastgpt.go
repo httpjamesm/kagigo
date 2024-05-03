@@ -2,7 +2,7 @@ package kagi
 
 import (
 	"fmt"
-	"go/types"
+	"github.com/httpjamesm/kagigo/types"
 )
 
 type FastGPTCompletionParams struct {
@@ -42,7 +42,7 @@ func (c *Client) FastGPTCompletion(params FastGPTCompletionParams) (res FastGPTC
 	}
 
 	if len(res.Errors) != 0 {
-		err = fmt.Errorf("api returned error: %v", res.Errors)
+		err = fmt.Errorf("api returned error: %v", res.Errors[0])
 		return
 	}
 
