@@ -71,11 +71,14 @@ func (c *Client) SendRequest(method, path string, data interface{}, v any) (err 
 	}
 
 	if resp.StatusCode() != 200 {
-		var response UniversalSummarizerResponse
-		if err := json.Unmarshal(resp.Body(), &response); err != nil {
-			return fmt.Errorf("received status code %d", resp.StatusCode())
+		var res UniversalSummarizerResponse
+		err := json.Unmarshal(resp.Body(), &res)
+		if err != nil || len(res.Errors) == 0 {
+			return fmt.Errorf("received status code %d with unparseable error response", resp.StatusCode())
 		}
-		return fmt.Errorf("received status code %d. error object: %v", resp.StatusCode(), response.Errors[0])
+		errObj := res.Errors[0]
+		return fmt.Errorf("received status code %d. error object: %v", resp.StatusCode(),
+			fmt.Sprintf("[code: %d, msg: %s, ref: %v]", errObj.Code, errObj.Msg, errObj.Ref))
 	}
 
 	if err != nil {

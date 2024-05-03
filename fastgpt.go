@@ -42,7 +42,8 @@ func (c *Client) FastGPTCompletion(params FastGPTCompletionParams) (res FastGPTC
 	}
 
 	if len(res.Errors) != 0 {
-		err = fmt.Errorf("api returned error: %v", res.Errors[0])
+		errObj := res.Errors[0]
+		err = fmt.Errorf("api returned error: %v", fmt.Sprintf("[code: %d, msg: %s, ref: %v]", errObj.Code, errObj.Msg, errObj.Ref))
 		return
 	}
 
