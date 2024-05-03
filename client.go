@@ -59,6 +59,7 @@ func (c *Client) SendRequest(method, path string, data interface{}, v any) (err 
 
 	switch method {
 	case "GET":
+		reqBuild.SetQueryParams(data.(map[string]string)) // enrichment api requires query params
 		resp, err = reqBuild.Get(baseURL + path)
 	case "POST":
 		resp, err = reqBuild.Post(baseURL + path)

@@ -16,10 +16,10 @@ type EnrichmentParams struct {
 
 type EnrichmentResponse struct {
 	Meta struct {
-		ID   string `json:"id"`
-		Node string `json:"node"`
-		Ms   int    `json:"ms"`
-		API  string `json:"api_balance"`
+		ID   string  `json:"id"`
+		Node string  `json:"node"`
+		Ms   int     `json:"ms"`
+		API  float64 `json:"api_balance"`
 	} `json:"meta"`
 	Data []struct {
 		T         int      `json:"t"`
@@ -49,12 +49,15 @@ func (c *Client) EnrichmentCompletion(endpointType string, params EnrichmentPara
 		return
 	}
 
-	err = c.SendRequest("GET", "/enrich/"+endpointType, params, &res)
+	// needed to set query parameters in client.go
+	paramsMap := make(map[string]string)
+	paramsMap["q"] = params.Q
+
+	err = c.SendRequest("GET", "/enrich/"+endpointType, paramsMap, &res)
 	if err != nil {
 		return
 	}
 
-	// will this ever happen here?
 	if len(res.Errors) != 0 {
 		errObj := res.Errors[0]
 		err = fmt.Errorf("api returned error: %v", fmt.Sprintf("[code: %d, msg: %s, ref: %v]", errObj.Code, errObj.Msg, errObj.Ref))
