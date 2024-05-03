@@ -71,8 +71,11 @@ func (c *Client) SendRequest(method, path string, data interface{}, v any) (err 
 	}
 
 	if resp.StatusCode() != 200 {
-		err = fmt.Errorf("received status code %d", resp.StatusCode())
-		return
+		var response UniversalSummarizerResponse
+		if err := json.Unmarshal(resp.Body(), &response); err != nil {
+			return fmt.Errorf("received status code %d", resp.StatusCode())
+		}
+		return fmt.Errorf("received status code %d. error object: %v", resp.StatusCode(), response.Errors[0])
 	}
 
 	if err != nil {
