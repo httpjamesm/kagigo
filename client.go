@@ -71,8 +71,14 @@ func (c *Client) SendRequest(method, path string, data interface{}, v any) (err 
 	}
 
 	if resp.StatusCode() != 200 {
-		err = fmt.Errorf("received status code %d", resp.StatusCode())
-		return
+		var res UniversalSummarizerResponse
+		err := json.Unmarshal(resp.Body(), &res)
+		if err != nil || len(res.Errors) == 0 {
+			return fmt.Errorf("received status code %d with unparseable error response", resp.StatusCode())
+		}
+		errObj := res.Errors[0]
+		return fmt.Errorf("received status code %d. error object: %v", resp.StatusCode(),
+			fmt.Sprintf("[code: %d, msg: %s, ref: %v]", errObj.Code, errObj.Msg, errObj.Ref))
 	}
 
 	if err != nil {
