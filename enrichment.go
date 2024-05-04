@@ -40,16 +40,16 @@ func (c *Client) EnrichmentCompletion(endpointType string, params EnrichmentPara
 	}
 
 	if endpointType == "" {
-		err = fmt.Errorf("endpoint_type is required")
+		err = fmt.Errorf("endpoint type is required")
 		return
 	}
 
 	if endpointType != EndpointTypeWeb && endpointType != EndpointTypeNews {
-		err = fmt.Errorf("endpoint_type must be web or news")
+		err = fmt.Errorf("endpoint type must be EndpointTypeWeb or EndpointTypeNews")
 		return
 	}
 
-	// needed to set query parameters in client.go
+	// needed to set as a query parameter in client.go
 	paramsMap := make(map[string]string)
 	paramsMap["q"] = params.Q
 
