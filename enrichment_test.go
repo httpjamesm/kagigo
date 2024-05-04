@@ -7,7 +7,7 @@ import (
 	"github.com/httpjamesm/kagigo/constants"
 )
 
-func TestEnrichment(t *testing.T) {
+func TestEnrichmentCompletion(t *testing.T) {
 	apiToken := os.Getenv("KAGI_API_TOKEN")
 
 	client := NewClient(&ClientConfig{
