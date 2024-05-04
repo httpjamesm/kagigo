@@ -23,7 +23,7 @@ client := kagi.NewClient(&kagi.ClientConfig{
 ```go
 response, err := client.FastGPTCompletion(kagi.FastGPTCompletionParams{
     Query:     "query",
-    WebSearch: false,
+    WebSearch: true,
     Cache:     true,
 })
 if err != nil {
@@ -46,4 +46,17 @@ if err != nil {
     return
 }
 fmt.Println(response.Data.Output)
+```
+
+### Enrichment
+
+```go
+response, err := client.EnrichmentCompletion(kagi.EndpointTypeWeb, kagi.EnrichmentParams{
+    Q: "kagi search",
+})
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(response.Data)
 ```
